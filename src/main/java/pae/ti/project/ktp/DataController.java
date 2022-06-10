@@ -37,7 +37,7 @@ public class DataController {
         return "menu";
     }
     
-    
+    //fungsi untuk menampilkan data dari db ke tabel
     @RequestMapping("/data")
     //@ResponseBody 
     public String getDataKTP(Model model){
@@ -53,7 +53,7 @@ public class DataController {
         
     }
     
-    //tambah data
+    //fungsi untuk menambahkan data yang ada di halaman index.html
     @PostMapping(value = "/add", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public String createData(@RequestParam("foto") MultipartFile file, HttpServletRequest request) throws Exception {
         Data d = new Data();
@@ -75,7 +75,7 @@ public class DataController {
     }
 
     
-    
+    //fungsi untuk menghapus data, terhubung dengan method destroy yang ada di JPAController
     @GetMapping(value = "/del/{id}")
     public String deleteData(@PathVariable("id") Integer id) throws NonexistentEntityException {
         DataJpaController d = new DataJpaController();
@@ -96,10 +96,12 @@ public class DataController {
     public String editData(@RequestParam("foto") MultipartFile file, HttpServletRequest request) throws Exception {
         Data d = new Data();
         
+        //mendapatkan parameter dari db agar ditampilkan dalam string ketika di web
         String ide = request.getParameter("id");
         String noktp = request.getParameter("noktp");
         String nama = request.getParameter("nama");
         String tanggal = request.getParameter("tanggal"); 
+        
         
         int id = Integer.parseInt(ide);
         d.setId(id);
