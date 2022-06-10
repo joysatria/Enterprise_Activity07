@@ -9,6 +9,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
@@ -31,20 +33,15 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Data.findByNoktp", query = "SELECT d FROM Data d WHERE d.noktp = :noktp"),
     @NamedQuery(name = "Data.findByNama", query = "SELECT d FROM Data d WHERE d.nama = :nama"),
     @NamedQuery(name = "Data.findByTgllahir", query = "SELECT d FROM Data d WHERE d.tgllahir = :tgllahir"),
-    @NamedQuery(name = "Data.findByJeniskelamin", query = "SELECT d FROM Data d WHERE d.jeniskelamin = :jeniskelamin"),
-    @NamedQuery(name = "Data.findByAlamat", query = "SELECT d FROM Data d WHERE d.alamat = :alamat"),
-    @NamedQuery(name = "Data.findByAgama", query = "SELECT d FROM Data d WHERE d.agama = :agama"),
-    @NamedQuery(name = "Data.findByStatus", query = "SELECT d FROM Data d WHERE d.status = :status"),
-    @NamedQuery(name = "Data.findByPekerjaan", query = "SELECT d FROM Data d WHERE d.pekerjaan = :pekerjaan"),
-    @NamedQuery(name = "Data.findByWarganegara", query = "SELECT d FROM Data d WHERE d.warganegara = :warganegara"),
-    @NamedQuery(name = "Data.findByBerlakuhingga", query = "SELECT d FROM Data d WHERE d.berlakuhingga = :berlakuhingga")})
+    @NamedQuery(name = "Data.findByAlamat", query = "SELECT d FROM Data d WHERE d.alamat = :alamat")})
 public class Data implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
-    private Long id;
+    private Integer id;
     @Basic(optional = false)
     @Column(name = "noktp")
     private String noktp;
@@ -56,52 +53,32 @@ public class Data implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date tgllahir;
     @Basic(optional = false)
-    @Column(name = "jeniskelamin")
-    private String jeniskelamin;
-    @Basic(optional = false)
     @Column(name = "alamat")
     private String alamat;
-    @Basic(optional = false)
-    @Column(name = "agama")
-    private String agama;
-    @Basic(optional = false)
-    @Column(name = "status")
-    private String status;
-    @Column(name = "pekerjaan")
-    private String pekerjaan;
-    @Basic(optional = false)
-    @Column(name = "warganegara")
-    private String warganegara;
-    @Column(name = "berlakuhingga")
-    private String berlakuhingga;
     @Lob
     @Column(name = "foto")
-    private byte[] foto;
+    private String foto;
 
     public Data() {
     }
 
-    public Data(Long id) {
+    public Data(Integer id) {
         this.id = id;
     }
 
-    public Data(Long id, String noktp, String nama, Date tgllahir, String jeniskelamin, String alamat, String agama, String status, String warganegara) {
+    public Data(Integer id, String noktp, String nama, Date tgllahir, String alamat) {
         this.id = id;
         this.noktp = noktp;
         this.nama = nama;
         this.tgllahir = tgllahir;
-        this.jeniskelamin = jeniskelamin;
         this.alamat = alamat;
-        this.agama = agama;
-        this.status = status;
-        this.warganegara = warganegara;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -129,14 +106,6 @@ public class Data implements Serializable {
         this.tgllahir = tgllahir;
     }
 
-    public String getJeniskelamin() {
-        return jeniskelamin;
-    }
-
-    public void setJeniskelamin(String jeniskelamin) {
-        this.jeniskelamin = jeniskelamin;
-    }
-
     public String getAlamat() {
         return alamat;
     }
@@ -145,51 +114,11 @@ public class Data implements Serializable {
         this.alamat = alamat;
     }
 
-    public String getAgama() {
-        return agama;
-    }
-
-    public void setAgama(String agama) {
-        this.agama = agama;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getPekerjaan() {
-        return pekerjaan;
-    }
-
-    public void setPekerjaan(String pekerjaan) {
-        this.pekerjaan = pekerjaan;
-    }
-
-    public String getWarganegara() {
-        return warganegara;
-    }
-
-    public void setWarganegara(String warganegara) {
-        this.warganegara = warganegara;
-    }
-
-    public String getBerlakuhingga() {
-        return berlakuhingga;
-    }
-
-    public void setBerlakuhingga(String berlakuhingga) {
-        this.berlakuhingga = berlakuhingga;
-    }
-
-    public byte[] getFoto() {
+    public String getFoto() {
         return foto;
     }
 
-    public void setFoto(byte[] foto) {
+    public void setFoto(String foto) {
         this.foto = foto;
     }
 

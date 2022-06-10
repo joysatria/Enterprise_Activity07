@@ -14,7 +14,6 @@ import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import pae.ti.project.ktp.exceptions.NonexistentEntityException;
-import pae.ti.project.ktp.exceptions.PreexistingEntityException;
 
 /**
  *
@@ -33,19 +32,16 @@ public class DataJpaController implements Serializable {
 
     public DataJpaController() {
     }
+    
+    
 
-    public void create(Data data) throws PreexistingEntityException, Exception {
+    public void create(Data data) {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
             em.persist(data);
             em.getTransaction().commit();
-        } catch (Exception ex) {
-            if (findData(data.getId()) != null) {
-                throw new PreexistingEntityException("Data " + data + " already exists.", ex);
-            }
-            throw ex;
         } finally {
             if (em != null) {
                 em.close();
@@ -63,7 +59,7 @@ public class DataJpaController implements Serializable {
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                Long id = data.getId();
+                Integer id = data.getId();
                 if (findData(id) == null) {
                     throw new NonexistentEntityException("The data with id " + id + " no longer exists.");
                 }
@@ -76,7 +72,7 @@ public class DataJpaController implements Serializable {
         }
     }
 
-    public void destroy(Long id) throws NonexistentEntityException {
+    public void destroy(Integer id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -121,7 +117,7 @@ public class DataJpaController implements Serializable {
         }
     }
 
-    public Data findData(Long id) {
+    public Data findData(Integer id) {
         EntityManager em = getEntityManager();
         try {
             return em.find(Data.class, id);
